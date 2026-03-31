@@ -53,6 +53,7 @@
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       background: rgba(5,8,16,0.8);
       border-bottom: 1px solid var(--border);
@@ -64,7 +65,7 @@
     .nav-logo {
       font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em;
       background: linear-gradient(135deg, var(--accent), #a78bfa);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
 
     .nav-links { display: flex; gap: 32px; }
@@ -111,7 +112,7 @@
 
     h1 span {
       background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 60%, #f472b6 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
 
     .hero-sub {
@@ -135,6 +136,7 @@
       background: var(--card-bg); color: var(--text); font-weight: 600; font-size: 1rem;
       padding: 14px 32px; border-radius: 10px; text-decoration: none;
       border: 1px solid var(--border); transition: border-color 0.2s;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
     }
     .btn-secondary:hover { border-color: rgba(0,229,255,0.4); }
@@ -184,6 +186,7 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 16px; padding: 36px;
+      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
       cursor: default;
@@ -247,6 +250,7 @@
     .tech-item {
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 12px; padding: 20px 24px;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       transition: border-color 0.2s;
     }
@@ -286,7 +290,7 @@
     .footer-logo {
       font-size: 1rem; font-weight: 800;
       background: linear-gradient(135deg, var(--accent), #a78bfa);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
 
     .footer-links { display: flex; gap: 24px; }
@@ -324,7 +328,7 @@
     <a href="/telecom">Telecom</a>
     <a href="#tech">Technology</a>
     <a href="#contact">Contact</a>
-    <a href="https://github.com/whitestone1121-web" target="_blank">GitHub</a>
+    <a href="https://github.com/whitestone1121-web" target="_blank" rel="noopener">GitHub</a>
     <a href="#contact" class="nav-cta">Request Pilot</a>
   </div>
 </nav>
@@ -341,7 +345,7 @@
   </p>
   <div class="hero-actions">
     <a href="#contact" class="btn-primary">Request a Pilot →</a>
-    <a href="https://github.com/whitestone1121-web" target="_blank" class="btn-secondary">View on GitHub</a>
+    <a href="https://github.com/whitestone1121-web" target="_blank" rel="noopener" class="btn-secondary">View on GitHub</a>
   </div>
 </section>
 
@@ -418,7 +422,7 @@
     <div class="achievement-text fade-up">
       <h2>Top-3 on OpenAI's Parameter Golf Leaderboard</h2>
       <p>Compressed a 24M-parameter hybrid language model into 15MB — competing against ML researchers worldwide. Using GPTQ-lite INT8 (per-row MSE clip search), Value Residuals, and Muon + Newton-Schulz orthogonalization. The same compression discipline powers our edge deployments.</p>
-      <a href="https://github.com/openai/parameter-golf/pull/604" target="_blank" class="achievement-link">
+      <a href="https://github.com/openai/parameter-golf/pull/604" target="_blank" rel="noopener" class="achievement-link">
         View PR #604 on GitHub →
       </a>
     </div>
@@ -458,8 +462,8 @@
 <footer>
   <div class="footer-logo">SignalBrain Inc.</div>
   <div class="footer-links">
-    <a href="https://github.com/whitestone1121-web" target="_blank">GitHub</a>
-    <a href="https://github.com/openai/parameter-golf/pull/604" target="_blank">Research</a>
+    <a href="https://github.com/whitestone1121-web" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/openai/parameter-golf/pull/604" target="_blank" rel="noopener">Research</a>
     <a href="#contact">Contact</a>
   </div>
   <div style="color:var(--muted);font-size:0.8rem;">© 2026 SignalBrain Inc. San Diego, CA</div>

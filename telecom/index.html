@@ -53,6 +53,7 @@
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       background: rgba(5,8,16,0.85);
       border-bottom: 1px solid var(--border);
@@ -64,7 +65,7 @@
     .nav-logo {
       font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em;
       background: linear-gradient(135deg, var(--accent), #a78bfa);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
       text-decoration: none;
     }
 
@@ -116,7 +117,7 @@
 
     h1 .grad-telecom {
       background: linear-gradient(135deg, var(--amber) 0%, var(--accent) 50%, #a78bfa 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
 
     .hero-sub {
@@ -140,6 +141,7 @@
       background: var(--card-bg); color: var(--text); font-weight: 600; font-size: 1rem;
       padding: 14px 32px; border-radius: 10px; text-decoration: none;
       border: 1px solid var(--border); transition: border-color 0.2s;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
     }
     .btn-secondary:hover { border-color: rgba(245,158,11,0.4); }
@@ -241,6 +243,7 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 16px; padding: 36px;
+      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
@@ -289,7 +292,7 @@
     .arch-node {
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 14px; padding: 24px 28px; text-align: center;
-      backdrop-filter: blur(10px); min-width: 180px;
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); min-width: 180px;
       transition: border-color 0.3s, transform 0.3s;
     }
     .arch-node:hover { border-color: rgba(245,158,11,0.35); transform: translateY(-3px); }
@@ -314,6 +317,7 @@
     .comp-item {
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 12px; padding: 24px;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px); text-align: center;
       transition: border-color 0.2s;
     }
@@ -354,7 +358,7 @@
     .footer-logo {
       font-size: 1rem; font-weight: 800;
       background: linear-gradient(135deg, var(--accent), #a78bfa);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
 
     .footer-links { display: flex; gap: 24px; }
@@ -607,7 +611,7 @@
   <div class="footer-logo">SignalBrain Inc.</div>
   <div class="footer-links">
     <a href="/">Home</a>
-    <a href="https://github.com/whitestone1121-web" target="_blank">GitHub</a>
+    <a href="https://github.com/whitestone1121-web" target="_blank" rel="noopener">GitHub</a>
     <a href="#contact">Contact</a>
   </div>
   <div style="color:var(--muted);font-size:0.8rem;">© 2026 SignalBrain Inc. San Diego, CA</div>
@@ -676,5 +680,3 @@
 </script>
 </body>
 </html>
-</CodeContent>
-<parameter name="Description">Full telecom landing page matching signalbrain.ai design system with live terminal simulation, architecture diagram, capabilities grid, and compliance section — optimized for MENA telecom executive pitches.
