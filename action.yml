@@ -1,0 +1,39 @@
+name: "SignalBrain receipt gate"
+description: "Score merged AI-agent receipts and enforce calibrated per-class trust"
+branding:
+  icon: "check-circle"
+  color: "green"
+
+inputs:
+  receipts:
+    description: "Glob of receipt files to score (post-merge)"
+    default: "receipts/*.md"
+  ledger:
+    description: "Path to the ledger JSONL (commit it, or persist as an artifact)"
+    default: ".signalbrain/ledger.jsonl"
+  merged-ref:
+    description: "Ref that defines 'merged'"
+    default: "origin/main"
+  window:
+    description: "Per-class recency window"
+    default: "10"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - shell: bash
+      run: pip install "git+https://github.com/whitestone1121-web/signalbrain.git@main"
+    - shell: bash
+      run: |
+        git fetch origin main --depth=200 || true
+        shopt -s nullglob
+        status=0
+        for r in ${{ inputs.receipts }}; do
+          sb score "$r" --root . --ledger "${{ inputs.ledger }}" --ref "${{ inputs.merged-ref }}" || status=$?
+        done
+        echo "== per-class trust =="
+        sb gate --ledger "${{ inputs.ledger }}" --by-class --window "${{ inputs.window }}" || true
+        exit $status

@@ -19,6 +19,9 @@ classifiers = [
   "Topic :: Software Development :: Quality Assurance",
 ]
 
+[project.scripts]
+sb = "signalbrain.cli:main"
+
 [project.urls]
 Homepage = "https://signalbrain.ai"
 Repository = "https://github.com/whitestone1121-web/signalbrain"
