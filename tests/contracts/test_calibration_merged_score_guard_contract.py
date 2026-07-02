@@ -22,7 +22,7 @@ import pytest
 REPO = Path(__file__).resolve().parents[2]
 CHECK = REPO / "scripts" / "calibration_receipt_merged_check.sh"
 WRAPPER = REPO / "scripts" / "calibration_score_receipt.sh"
-MERGED_RECEIPT = REPO / "docs" / "improvements" / "0570-calibration-bash-measure-fix.md"
+MERGED_RECEIPT = REPO / "docs" / "improvements" / "0593-tooling-pin-adjudication-classifier-standard.md"
 
 
 def _run(args: list[str], env_extra: dict[str, str] | None = None) -> subprocess.CompletedProcess:
@@ -81,7 +81,7 @@ def test_modified_copy_of_merged_receipt_refused(tmp_path):
     doctored = tmp_path / MERGED_RECEIPT.name
     shutil.copy(MERGED_RECEIPT, doctored)
     doctored.write_text(
-        MERGED_RECEIPT.read_text(encoding="utf-8").replace("0.93", "0.99"), encoding="utf-8"
+        MERGED_RECEIPT.read_text(encoding="utf-8").replace("0.9", "0.99"), encoding="utf-8"
     )
     proc = _run([str(MERGED_RECEIPT), str(doctored)], {"CALIBRATION_MERGED_REF": "HEAD"})
     assert proc.returncode == 4

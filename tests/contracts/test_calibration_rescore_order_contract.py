@@ -73,6 +73,7 @@ def test_replace_receipt_rows_preserves_position_and_drops_dupes(tmp_path):
 
 
 def test_score_glob_rescore_keeps_row_order(tmp_path, monkeypatch):
+    monkeypatch.setenv("CALIBRATION_ALLOW_UNMERGED", "1")  # hermetic tmp receipts
     mod = _load()
     ledger = tmp_path / "ledger.jsonl"
     _write_ledger(ledger, [_row("0001-old", False), _row("0002-win", True, "bugfix"), _row("0003-win", True, "bugfix")])
@@ -90,6 +91,7 @@ def test_score_glob_rescore_keeps_row_order(tmp_path, monkeypatch):
 
 
 def test_score_glob_failed_rescore_keeps_old_row(tmp_path, monkeypatch):
+    monkeypatch.setenv("CALIBRATION_ALLOW_UNMERGED", "1")  # hermetic tmp receipts
     mod = _load()
     ledger = tmp_path / "ledger.jsonl"
     _write_ledger(ledger, [_row("0001-old", False), _row("0002-win", True, "bugfix")])
@@ -103,6 +105,7 @@ def test_score_glob_failed_rescore_keeps_old_row(tmp_path, monkeypatch):
 
 
 def test_score_glob_new_receipt_still_appends(tmp_path, monkeypatch):
+    monkeypatch.setenv("CALIBRATION_ALLOW_UNMERGED", "1")  # hermetic tmp receipts
     mod = _load()
     ledger = tmp_path / "ledger.jsonl"
     _write_ledger(ledger, [_row("0002-win", True, "bugfix")])
