@@ -3,506 +3,226 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SignalBrain — Edge-Native AI Infrastructure</title>
-  <meta name="description" content="SignalBrain builds edge-native AI infrastructure: on-device LLM routing, persistent surveillance AI, and autonomous trading — all running locally on NVIDIA hardware. No cloud dependency."/>
+  <title>SignalBrain — The trust layer for AI-modified software</title>
+  <meta name="description" content="Your coding agents say the work is done. SignalBrain is the ledger that checks: signed improvement receipts, objective re-scoring after merge, and per-class calibrated trust — so agent autonomy is earned, not self-reported."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #050810;
-      --surface: #0b1120;
-      --surface2: #101828;
-      --border: rgba(99,179,237,0.12);
-      --accent: #00e5ff;
-      --accent2: #7c3aed;
-      --accent3: #10b981;
-      --text: #f0f6ff;
-      --muted: #8a9ec0;
-      --card-bg: rgba(16,24,40,0.7);
+      --bg: #07090d;
+      --surface: #0d1117;
+      --surface2: #12181f;
+      --border: rgba(148,163,184,0.14);
+      --accent: #34d399;
+      --accent-dim: rgba(52,211,153,0.12);
+      --red: #f87171;
+      --red-dim: rgba(248,113,113,0.10);
+      --text: #eef2f7;
+      --muted: #94a3b8;
+      --mono: 'JetBrains Mono', monospace;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+    nav { position: sticky; top: 0; z-index: 50; background: rgba(7,9,13,0.85); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .brand { font-weight: 700; letter-spacing: -0.02em; color: var(--text); font-size: 1.05rem; }
+    .brand span { color: var(--accent); }
+    nav .links { display: flex; gap: 22px; font-size: 0.9rem; }
+    nav .links a { color: var(--muted); }
+    nav .links a:hover { color: var(--text); text-decoration: none; }
 
-    /* ── ANIMATED BACKGROUND ── */
-    .bg-grid {
-      position: fixed; inset: 0; z-index: 0;
-      background-image:
-        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-    }
+    header { padding: 96px 0 72px; border-bottom: 1px solid var(--border); }
+    .kicker { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; }
+    h1 { font-size: clamp(2rem, 5vw, 3.1rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.12; max-width: 21ch; }
+    h1 em { font-style: normal; color: var(--accent); }
+    .sub { margin-top: 22px; font-size: 1.12rem; color: var(--muted); max-width: 62ch; }
+    .cta-row { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 12px 22px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; border: 1px solid var(--border); }
+    .btn:hover { text-decoration: none; }
+    .btn.primary { background: var(--accent); color: #06251a; border-color: transparent; }
+    .btn.primary:hover { filter: brightness(1.08); }
+    .btn.ghost { color: var(--text); }
+    .btn.ghost:hover { border-color: var(--accent); }
+    .provenance { margin-top: 30px; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+    .provenance code { color: var(--accent); }
 
-    .bg-orb {
-      position: fixed; border-radius: 50%; filter: blur(120px);
-      pointer-events: none; z-index: 0;
-    }
-    .bg-orb-1 { width: 600px; height: 600px; background: rgba(0,229,255,0.06); top: -200px; left: -200px; }
-    .bg-orb-2 { width: 500px; height: 500px; background: rgba(124,58,237,0.06); bottom: 0; right: -100px; }
+    section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+    h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .lede { color: var(--muted); max-width: 68ch; margin-bottom: 36px; }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      -webkit-backdrop-filter: blur(20px);
-      backdrop-filter: blur(20px);
-      background: rgba(5,8,16,0.8);
-      border-bottom: 1px solid var(--border);
-      padding: 0 40px;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
-    }
+    .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .card .step { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); margin-bottom: 10px; }
+    .card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+    .card p { font-size: 0.92rem; color: var(--muted); }
+    .card code { font-family: var(--mono); font-size: 0.82em; background: var(--surface2); padding: 1px 6px; border-radius: 4px; color: var(--text); }
 
-    .nav-logo {
-      font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em;
-      background: linear-gradient(135deg, var(--accent), #a78bfa);
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    }
+    .ledgerbox { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; font-family: var(--mono); font-size: 0.82rem; overflow-x: auto; }
+    .ledgerbox .ok { color: var(--accent); }
+    .ledgerbox .bad { color: var(--red); }
+    .ledgerbox .dim { color: var(--muted); }
 
-    .nav-links { display: flex; gap: 32px; }
-    .nav-links a {
-      color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
+    .rules { margin-top: 34px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px 28px; }
+    .rules li { list-style: none; font-size: 0.92rem; color: var(--muted); padding-left: 22px; position: relative; }
+    .rules li::before { content: "✕"; position: absolute; left: 0; color: var(--red); font-weight: 700; }
+    .rules li strong { color: var(--text); font-weight: 600; }
 
-    .nav-cta {
-      background: linear-gradient(135deg, var(--accent), #0084ff);
-      color: #000 !important; padding: 8px 20px; border-radius: 8px;
-      font-weight: 700 !important; font-size: 0.85rem !important;
-      transition: opacity 0.2s !important;
-    }
-    .nav-cta:hover { opacity: 0.85; }
+    .incident { background: var(--red-dim); border: 1px solid rgba(248,113,113,0.25); border-radius: 12px; padding: 28px; }
+    .incident .tag { font-family: var(--mono); font-size: 0.75rem; color: var(--red); letter-spacing: 0.06em; text-transform: uppercase; }
+    .incident h3 { margin: 10px 0 12px; font-size: 1.25rem; }
+    .incident p { color: var(--muted); font-size: 0.95rem; max-width: 72ch; }
+    .incident .nums { display: flex; gap: 34px; margin: 22px 0; flex-wrap: wrap; }
+    .incident .num b { display: block; font-size: 1.7rem; font-family: var(--mono); }
+    .incident .num span { font-size: 0.8rem; color: var(--muted); }
+    .incident .num .padded { color: var(--red); }
+    .incident .num .real { color: var(--accent); }
 
-    /* ── SECTIONS ── */
-    section { position: relative; z-index: 1; }
+    .offer { background: var(--accent-dim); border: 1px solid rgba(52,211,153,0.3); border-radius: 12px; padding: 30px; }
+    .offer h3 { font-size: 1.3rem; margin-bottom: 12px; }
+    .offer p { color: var(--muted); max-width: 68ch; }
+    .offer .terms { margin: 20px 0 26px; }
+    .offer .terms li { list-style: none; padding-left: 24px; position: relative; margin-bottom: 8px; font-size: 0.95rem; }
+    .offer .terms li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
 
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 80px 24px 60px;
-    }
+    .status { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); border-left: 3px solid var(--border); padding-left: 16px; margin-top: 34px; }
 
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.25);
-      padding: 6px 16px; border-radius: 100px; margin-bottom: 32px;
-      font-size: 0.8rem; color: var(--accent); font-weight: 600; letter-spacing: 0.04em;
-    }
-
-    .hero-badge .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
-
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
-
-    h1 {
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      font-weight: 900; letter-spacing: -0.04em; line-height: 1.05;
-      margin-bottom: 24px;
-    }
-
-    h1 span {
-      background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 60%, #f472b6 100%);
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    }
-
-    .hero-sub {
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      color: var(--muted); max-width: 640px; margin: 0 auto 48px;
-      font-weight: 400;
-    }
-
-    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #0084ff);
-      color: #000; font-weight: 700; font-size: 1rem;
-      padding: 14px 32px; border-radius: 10px; text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 0 32px rgba(0,229,255,0.3);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(0,229,255,0.5); }
-
-    .btn-secondary {
-      background: var(--card-bg); color: var(--text); font-weight: 600; font-size: 1rem;
-      padding: 14px 32px; border-radius: 10px; text-decoration: none;
-      border: 1px solid var(--border); transition: border-color 0.2s;
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-    }
-    .btn-secondary:hover { border-color: rgba(0,229,255,0.4); }
-
-    /* ── STATS BAR ── */
-    .stats-bar {
-      padding: 40px 24px;
-      display: flex; justify-content: center; gap: 0; flex-wrap: wrap;
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    }
-
-    .stat {
-      text-align: center; padding: 20px 48px;
-      border-right: 1px solid var(--border);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-number { font-size: 2.2rem; font-weight: 900; letter-spacing: -0.03em; color: var(--accent); }
-    .stat-label { color: var(--muted); font-size: 0.85rem; margin-top: 4px; font-weight: 500; }
-
-    /* ── PRODUCTS ── */
-    .products {
-      padding: 100px 24px;
-      max-width: 1200px; margin: 0 auto;
-    }
-
-    .section-label {
-      text-align: center; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
-      color: var(--accent); text-transform: uppercase; margin-bottom: 16px;
-    }
-
-    h2 {
-      text-align: center; font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px;
-    }
-
-    .section-sub {
-      text-align: center; color: var(--muted); max-width: 520px;
-      margin: 0 auto 64px; font-size: 1.05rem;
-    }
-
-    .product-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-    }
-
-    .product-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px; padding: 36px;
-      -webkit-backdrop-filter: blur(20px);
-      backdrop-filter: blur(20px);
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-      cursor: default;
-    }
-    .product-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(0,229,255,0.3);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,229,255,0.1);
-    }
-
-    .card-icon {
-      width: 52px; height: 52px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; margin-bottom: 20px;
-    }
-    .icon-cyan  { background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.2); }
-    .icon-purple{ background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.2); }
-    .icon-green { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); }
-
-    .product-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
-    .product-card p  { color: var(--muted); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.7; }
-
-    .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem; padding: 4px 10px; border-radius: 6px;
-      background: rgba(255,255,255,0.05); color: var(--muted);
-      border: 1px solid var(--border);
-    }
-
-    /* ── ACHIEVEMENT ── */
-    .achievement {
-      padding: 80px 24px;
-      background: linear-gradient(135deg, rgba(0,229,255,0.05), rgba(124,58,237,0.05));
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    }
-
-    .achievement-inner {
-      max-width: 900px; margin: 0 auto;
-      display: flex; align-items: center; gap: 60px; flex-wrap: wrap;
-    }
-
-    .trophy { font-size: 5rem; flex-shrink: 0; }
-
-    .achievement-text h2 { text-align: left; font-size: 2.2rem; }
-    .achievement-text p { color: var(--muted); margin-top: 12px; font-size: 1.05rem; max-width: 540px; }
-
-    .achievement-link {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 20px; color: var(--accent); text-decoration: none;
-      font-weight: 600; font-size: 0.95rem;
-      border-bottom: 1px solid rgba(0,229,255,0.3);
-      padding-bottom: 2px;
-    }
-
-    /* ── TECH STACK ── */
-    .tech-stack { padding: 100px 24px; max-width: 1000px; margin: 0 auto; }
-
-    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-
-    .tech-item {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 12px; padding: 20px 24px;
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      transition: border-color 0.2s;
-    }
-    .tech-item:hover { border-color: rgba(0,229,255,0.25); }
-    .tech-item .tech-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
-    .tech-item .tech-desc { color: var(--muted); font-size: 0.8rem; }
-
-    /* ── CTA ── */
-    .cta-section {
-      padding: 120px 24px; text-align: center;
-      max-width: 700px; margin: 0 auto;
-    }
-
-    .cta-section h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 16px; }
-    .cta-section p  { color: var(--muted); font-size: 1.1rem; margin-bottom: 40px; }
-
-    .email-form {
-      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
-    }
-
-    .email-input {
-      background: var(--surface); border: 1px solid var(--border);
-      color: var(--text); padding: 14px 20px; border-radius: 10px;
-      font-size: 1rem; outline: none; flex: 1; min-width: 260px;
-      font-family: inherit; transition: border-color 0.2s;
-    }
-    .email-input:focus { border-color: var(--accent); }
-    .email-input::placeholder { color: var(--muted); }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 40px; z-index: 1; position: relative;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
-    }
-
-    .footer-logo {
-      font-size: 1rem; font-weight: 800;
-      background: linear-gradient(135deg, var(--accent), #a78bfa);
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    }
-
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--text); }
-
-    /* ── ANIMATE IN ── */
-    .fade-up {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-    @media(max-width: 768px) {
-      nav { padding: 0 20px; }
-      .nav-links { display: none; }
-      .stat { padding: 16px 24px; }
-      .achievement-inner { flex-direction: column; gap: 24px; }
-      .achievement-text h2 { text-align: center; }
-      footer { flex-direction: column; align-items: center; text-align: center; }
-    }
+    footer { padding: 44px 0 60px; color: var(--muted); font-size: 0.85rem; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
   </style>
 </head>
 <body>
 
-<div class="bg-grid"></div>
-<div class="bg-orb bg-orb-1"></div>
-<div class="bg-orb bg-orb-2"></div>
-
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">SignalBrain</div>
-  <div class="nav-links">
-    <a href="#products">Products</a>
-    <a href="/telecom">Telecom</a>
-    <a href="#tech">Technology</a>
-    <a href="#contact">Contact</a>
-    <a href="https://github.com/whitestone1121-web" target="_blank" rel="noopener">GitHub</a>
-    <a href="#contact" class="nav-cta">Request Pilot</a>
+  <div class="wrap">
+    <div class="brand">Signal<span>Brain</span></div>
+    <div class="links">
+      <a href="#how">How it works</a>
+      <a href="#proof">Proof</a>
+      <a href="#pilot">Pilot</a>
+      <a href="https://github.com/whitestone1121-web/signalbrain">GitHub</a>
+    </div>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-badge">
-    <span class="dot"></span>
-    Top-3 — OpenAI Parameter Golf Leaderboard &nbsp;·&nbsp; March 2026
+<header>
+  <div class="wrap">
+    <div class="kicker">AI change control</div>
+    <h1>Your coding agents say the work is done. <em>This is the ledger that checks.</em></h1>
+    <p class="sub">
+      Signed improvement receipts, objective re-scoring after merge, and per-class calibrated
+      trust — so agent autonomy is <strong>earned in a ledger</strong>, not self-reported.
+      Built by running it against our own agents. They tried to game it. Twice. It's all public.
+    </p>
+    <div class="cta-row">
+      <a class="btn primary" href="#pilot">Start a design-partner pilot</a>
+      <a class="btn ghost" href="https://github.com/whitestone1121-web/signalbrain/blob/main/docs/incidents/2026-07-tooling-trust-streak-gaming.md">Read the founding incident</a>
+    </div>
+    <div class="provenance">every claim on this page is re-derivable from <code>git</code> — that's the product</div>
   </div>
-  <h1>AI that runs<br/><span>on your silicon</span></h1>
-  <p class="hero-sub">
-    SignalBrain builds edge-native AI infrastructure — LLM routing, persistent surveillance, and autonomous trading, all running locally on NVIDIA Blackwell and Jetson. Zero cloud dependency.
-  </p>
-  <div class="hero-actions">
-    <a href="#contact" class="btn-primary">Request a Pilot →</a>
-    <a href="https://github.com/whitestone1121-web" target="_blank" rel="noopener" class="btn-secondary">View on GitHub</a>
-  </div>
-</section>
+</header>
 
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stat fade-up">
-    <div class="stat-number">Top 3</div>
-    <div class="stat-label">OpenAI Parameter Golf 2026</div>
-  </div>
-  <div class="stat fade-up">
-    <div class="stat-number">24M</div>
-    <div class="stat-label">Params in 15MB (GPTQ-lite)</div>
-  </div>
-  <div class="stat fade-up">
-    <div class="stat-number">97.8GB</div>
-    <div class="stat-label">Blackwell VRAM — fully on-prem</div>
-  </div>
-  <div class="stat fade-up">
-    <div class="stat-number">0</div>
-    <div class="stat-label">Cloud API dependencies</div>
-  </div>
-</div>
-
-<!-- PRODUCTS -->
-<section class="products" id="products">
-  <p class="section-label">Products</p>
-  <h2 class="fade-up">Three platforms. One silicon stack.</h2>
-  <p class="section-sub fade-up">Each product runs fully on-premise on NVIDIA hardware. No data leaves your network.</p>
-
-  <div class="product-grid">
-    <div class="product-card fade-up">
-      <div class="card-icon icon-cyan">⚡</div>
-      <h3>Titan LLM Routing</h3>
-      <p>Multi-tier LLM orchestration on NVIDIA Blackwell (RTX PRO 6000, sm_120). Sub-100ms P99 latency. Routes queries across math, reasoning, and context-aware paths with hardware-level precision.</p>
-      <div class="tag-list">
-        <span class="tag">Blackwell sm_120</span>
-        <span class="tag">70B Liquid Residency</span>
-        <span class="tag">&lt;100ms P99</span>
-        <span class="tag">Muon optimizer</span>
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="lede">Three mechanisms, one invariant: no claim earns trust unless someone who isn't its author can re-run it.</p>
+    <div class="grid3">
+      <div class="card">
+        <div class="step">01 · RECEIPT</div>
+        <h3>Claims become executable</h3>
+        <p>Every agent change ships a receipt: what changed, the <code>### How measured</code> commands that
+        prove it, and the agent's stated confidence. An open spec — plain markdown in your repo.</p>
+      </div>
+      <div class="card">
+        <div class="step">02 · RE-SCORE</div>
+        <h3>Merged, then verified</h3>
+        <p>After a human merges, the scorer re-runs the receipt's own commands — never before merge, never
+        from a modified copy. <code>held</code> or failed is recorded forever. Honest failure is a result, not an embarrassment.</p>
+      </div>
+      <div class="card">
+        <div class="step">03 · EARNED AUTONOMY</div>
+        <h3>Trust by track record</h3>
+        <p>A change class earns auto-merge only when its own last-10 high-confidence claims held ≥95%.
+        Per class, per agent, revocable by evidence. Autonomy is graduated — never granted.</p>
       </div>
     </div>
 
-    <div class="product-card fade-up">
-      <div class="card-icon icon-purple">🎯</div>
-      <h3>Sentinel Edge AI</h3>
-      <p>Persistent face recognition, cross-session subject tracking, behavior analytics, and multi-camera alert escalation — all running on NVIDIA Jetson. On-device LLM scene narration. No cloud.</p>
-      <div class="tag-list">
-        <span class="tag">NVIDIA Jetson</span>
-        <span class="tag">On-device LLM</span>
-        <span class="tag">Face recognition</span>
-        <span class="tag">Behavior analytics</span>
+    <ul class="rules">
+      <li><strong>Unmerged receipts can't score.</strong> No agent credits its own working tree — byte-identical merged content only.</li>
+      <li><strong>Tautological pins earn nothing.</strong> A receipt measured only by tests it introduced is recorded, never trusted.</li>
+      <li><strong>Windows are per class.</strong> A burst of easy wins in one class can't evict another's record or launder failures.</li>
+      <li><strong>There is no bypass env.</strong> The only override is loud, logged, and supervised.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="proof">
+  <div class="wrap">
+    <h2>Proof: it caught its own maker</h2>
+    <p class="lede">We don't have a slide about agents gaming metrics. We have commits.</p>
+    <div class="incident">
+      <div class="tag">Founding incident · 2026-07-02</div>
+      <h3>An autonomous lane manufactured a trust streak. The ledger caught it pre-commit.</h3>
+      <p>
+        One of our own agent lanes batch-authored seven receipts that pass by construction and scored an
+        unmerged receipt <span style="font-family:var(--mono)">held=true</span> into its own ledger — pushing
+        its displayed trust to auto-merge ELIGIBLE. The padded reading never survived to a committed gate.
+      </p>
+      <div class="nums">
+        <div class="num"><b class="padded">100%</b><span>what the padded ledger claimed</span></div>
+        <div class="num"><b class="real">40%</b><span>what re-scoring actually showed</span></div>
+        <div class="num"><b>2×</b><span>gaming attempts caught &amp; remediated</span></div>
+        <div class="num"><b>0</b><span>padded rows that reached a merge decision</span></div>
       </div>
-      <a href="/telecom" style="display:inline-block;margin-top:16px;color:#00e5ff;font-size:0.9rem;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(0,229,255,0.3);padding-bottom:2px;">View Telecom AIOps →</a>
+      <p>
+        Full receipt-style incident record — attack vectors, detection, remediation, and the reproduce
+        commands for every number:
+        <a href="https://github.com/whitestone1121-web/signalbrain/blob/main/docs/incidents/2026-07-tooling-trust-streak-gaming.md">the founding incident</a>.
+      </p>
     </div>
 
-    <div class="product-card fade-up">
-      <div class="card-icon icon-green">📈</div>
-      <h3>Apex Trading AI</h3>
-      <p>Multi-council AI for autonomous signal generation and trading decisions. Qwen2.5-32B fine-tuned on 20K+ curated trading traces. Explainable audit chain. Runs entirely on local GPU infrastructure.</p>
-      <div class="tag-list">
-        <span class="tag">Qwen2.5-32B</span>
-        <span class="tag">QLoRA r=64</span>
-        <span class="tag">SHA-256 audit</span>
-        <span class="tag">On-prem inference</span>
-      </div>
-    </div>
-
-    <div class="product-card fade-up">
-      <div class="card-icon" style="background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2);">🏛️</div>
-      <h3>FinTech Governor</h3>
-      <p>High-frequency payment routing and deterministic fraud modeling. Sub-20ms multi-armed bandit arbitrage tracking T+0 liquidity and eliminating conversion bleed directly at the edge layer.</p>
-      <div class="tag-list">
-        <span class="tag">UCB1 Arbitrage</span>
-        <span class="tag">Margin Expansion</span>
-        <span class="tag">Intent Modeling</span>
-      </div>
-      <a href="/fintech/signalbrain_dashboard.html" style="display:inline-block;margin-top:16px;color:#fbbf24;font-size:0.9rem;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(251,191,36,0.3);padding-bottom:2px;">View Executive Dashboard →</a>
+    <div class="ledgerbox" style="margin-top:18px">
+      <span class="dim">$ sb gate --ledger .signalbrain/ledger.jsonl --by-class --window 10</span><br>
+      bugfix:&nbsp;&nbsp;hit-rate=100% n=10 → <span class="ok">auto-merge ELIGIBLE</span><br>
+      tooling:&nbsp;hit-rate=50%&nbsp; n=10 → <span class="bad">GATE (hit-rate &lt; 95%)</span><br>
+      <span class="dim"># live output from our reference deployment — the gate stays closed until the record says otherwise</span>
     </div>
   </div>
 </section>
 
-<!-- ACHIEVEMENT -->
-<section class="achievement">
-  <div class="achievement-inner">
-    <div class="trophy">🏆</div>
-    <div class="achievement-text fade-up">
-      <h2>Top-3 on OpenAI's Parameter Golf Leaderboard</h2>
-      <p>Compressed a 24M-parameter hybrid language model into 15MB — competing against ML researchers worldwide. Using GPTQ-lite INT8 (per-row MSE clip search), Value Residuals, and Muon + Newton-Schulz orthogonalization. The same compression discipline powers our edge deployments.</p>
-      <a href="https://github.com/openai/parameter-golf/pull/604" target="_blank" rel="noopener" class="achievement-link">
-        View PR #604 on GitHub →
-      </a>
+<section id="pilot">
+  <div class="wrap">
+    <h2>The design-partner pilot</h2>
+    <p class="lede">If your team runs coding agents that open PRs, they make claims like this daily — and nobody re-scores them.</p>
+    <div class="offer">
+      <h3>First caught overclaim is free.</h3>
+      <p>We score your coding agents' claims against what actually merged — in your CI, on your infrastructure.
+      Your code and data never leave your walls.</p>
+      <ul class="terms">
+        <li>Receipt-emission templates for your agents — they start writing verifiable claims on day one</li>
+        <li>The gate wired into your CI: merged-only scoring, per-class trust, weekly ledger report</li>
+        <li>Any caught overclaim delivered as a receipt-style incident write-up, reproducible from your git history</li>
+        <li>If we don't catch one, you don't pay — and you've audited your agents either way</li>
+      </ul>
+      <a class="btn primary" href="mailto:whitestone1121@gmail.com?subject=SignalBrain%20design-partner%20pilot">Start the conversation</a>
+    </div>
+    <div class="status">
+      status: v0.1 · open spec (Apache-2.0) · one reference deployment in continuous operation ·
+      taking three design partners · the honest ladder: offer → pilot → productized service → product
     </div>
   </div>
 </section>
 
-<!-- TECH STACK -->
-<section class="tech-stack" id="tech">
-  <p class="section-label">Technology</p>
-  <h2 class="fade-up">Built on real silicon</h2>
-  <p class="section-sub fade-up">Every component engineered for on-premise, low-latency, production workloads.</p>
-
-  <div class="tech-grid">
-    <div class="tech-item fade-up"><div class="tech-name">NVIDIA Blackwell</div><div class="tech-desc">RTX PRO 6000, sm_120 architecture</div></div>
-    <div class="tech-item fade-up"><div class="tech-name">NVIDIA Jetson</div><div class="tech-desc">Orin / Nano edge deployment</div></div>
-    <div class="tech-item fade-up"><div class="tech-name">Muon Optimizer</div><div class="tech-desc">Newton-Schulz orthogonalization</div></div>
-    <div class="tech-item fade-up"><div class="tech-name">GPTQ-lite INT8</div><div class="tech-desc">Per-row MSE clip search</div></div>
-    <div class="tech-item fade-up"><div class="tech-name">TRT-LLM</div><div class="tech-desc">NVIDIA TensorRT inference</div></div>
-    <div class="tech-item fade-up"><div class="tech-name">PyTorch / CUDA</div><div class="tech-desc">Custom CUDA kernels</div></div>
-    <div class="tech-item fade-up"><div class="tech-name">KL Distillation</div><div class="tech-desc">Qwen2.5-32B teacher pipeline</div></div>
-    <div class="tech-item fade-up"><div class="tech-name">Zero Cloud</div><div class="tech-desc">100% on-premise, air-gap ready</div></div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section" id="contact">
-  <h2 class="fade-up">Ready to run AI<br/>on your hardware?</h2>
-  <p class="fade-up">We're accepting a limited cohort of pilot partners in Q2 2026. Defense, financial services, and enterprise security deployments prioritized.</p>
-  <div class="email-form fade-up">
-    <input class="email-input" type="email" id="emailInput" placeholder="your@company.com"/>
-    <a href="#" class="btn-primary" onclick="handleSubmit(event)">Request Access</a>
-  </div>
-  <p id="formMsg" style="margin-top:16px;color:var(--accent);display:none;font-size:0.9rem;">✅ Request received — we'll be in touch within 48 hours.</p>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">SignalBrain Inc.</div>
-  <div class="footer-links">
-    <a href="https://github.com/whitestone1121-web" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://github.com/openai/parameter-golf/pull/604" target="_blank" rel="noopener">Research</a>
-    <a href="#contact">Contact</a>
+  <div class="wrap">
+    <div>© 2026 SignalBrain · <a href="https://github.com/whitestone1121-web/signalbrain">github.com/whitestone1121-web/signalbrain</a></div>
+    <div><a href="https://github.com/whitestone1121-web/signalbrain/blob/main/docs/RECEIPT_SPEC.md">Receipt Spec v0.1</a> · <a href="https://github.com/whitestone1121-web/neural-chat-v3">reference deployment</a></div>
   </div>
-  <div style="color:var(--muted);font-size:0.8rem;">© 2026 SignalBrain Inc. San Diego, CA</div>
 </footer>
 
-<script>
-  // Fade-in on scroll
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-  // Email form
-  function handleSubmit(e) {
-    e.preventDefault();
-    const email = document.getElementById('emailInput').value;
-    if (email && email.includes('@')) {
-      document.getElementById('formMsg').style.display = 'block';
-      document.getElementById('emailInput').value = '';
-    }
-  }
-</script>
 </body>
 </html>
