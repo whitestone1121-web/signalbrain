@@ -137,10 +137,18 @@ Three identities that must not share incentives:
 2. **Same-PR test-only measures are pins.** A receipt whose `### How measured`
    runs only tests introduced by the same change holds by construction and is
    classified `invariant_pin` at scoring time (`calibration_same_pr_pin`).
-   *Open question v0.1: this over-captures receipts for genuine behavioral
-   changes verified by their own new contract tests — the distinction between
-   existence-only pins and behavioral deltas needs a better discriminator (see
-   `docs/incidents/2026-07-tooling-trust-streak-gaming.md`, "over-pinning").*
+   **The classifier is the standard**: a receipt with any non-pytest measure, or
+   any pytest target that pre-existed its merge commit, is NOT a pin — it could
+   have failed, so it may earn trust. Manual pin batches must match the
+   classifier's verdict row-for-row or document each divergence; the 2026-07
+   remediation over-pinned five behavioral receipts this way and was corrected
+   by re-running the classifier (receipt 0593). Classification disputes are
+   settled by running the classifier, never by the authoring or the pinning
+   lane's judgment.
+   *Known grammar limitation: a measure line containing an unquoted shell pipe
+   (`cmd | grep x`) is parsed as arguments, not a pipeline — such measures fail
+   opaquely (observed on receipt 0582). Until the grammar handles pipes, write
+   single-command measures or move the pipeline into a script.*
 3. **Rescores are position-preserving.** Remove-then-append rescoring shifted
    unrelated rows through recency windows and silently deleted rows on capped or
    failed re-measurement. Rescore rewrites in place; failed re-measurement never
