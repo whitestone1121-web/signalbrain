@@ -25,7 +25,7 @@ runs:
       with:
         python-version: "3.12"
     - shell: bash
-      run: pip install "git+https://github.com/whitestone1121-web/signalbrain.git@main"
+      run: pip install signalbrain==0.1.0
     - shell: bash
       run: |
         git fetch origin main --depth=200 || true

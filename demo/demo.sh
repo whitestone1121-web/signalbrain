@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # SignalBrain 60-second demo — run it yourself; every line of output is real.
 #
-#   pip install git+https://github.com/whitestone1121-web/signalbrain
+#   pip install signalbrain
 #   bash demo/demo.sh
 #
 # Builds a scratch git repo, then walks the four beats:
