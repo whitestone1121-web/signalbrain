@@ -1,0 +1,250 @@
+{
+  "total_measured_rows": 58,
+  "overall": [
+    {
+      "bin": "[0.80,0.85)",
+      "mid": 0.825,
+      "n": 2,
+      "held": 1,
+      "hold_rate": 0.5
+    },
+    {
+      "bin": "[0.85,0.90)",
+      "mid": 0.875,
+      "n": 29,
+      "held": 25,
+      "hold_rate": 0.862
+    },
+    {
+      "bin": "[0.90,0.95)",
+      "mid": 0.925,
+      "n": 23,
+      "held": 19,
+      "hold_rate": 0.826
+    },
+    {
+      "bin": "[0.95,1.00)",
+      "mid": 0.975,
+      "n": 3,
+      "held": 1,
+      "hold_rate": 0.333
+    }
+  ],
+  "by_class": {
+    "bugfix": {
+      "n": 19,
+      "bins": [
+        {
+          "bin": "[0.80,0.85)",
+          "mid": 0.825,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        },
+        {
+          "bin": "[0.85,0.90)",
+          "mid": 0.875,
+          "n": 8,
+          "held": 8,
+          "hold_rate": 1.0
+        },
+        {
+          "bin": "[0.90,0.95)",
+          "mid": 0.925,
+          "n": 9,
+          "held": 8,
+          "hold_rate": 0.889
+        },
+        {
+          "bin": "[0.95,1.00)",
+          "mid": 0.975,
+          "n": 2,
+          "held": 1,
+          "hold_rate": 0.5
+        }
+      ]
+    },
+    "config": {
+      "n": 1,
+      "bins": [
+        {
+          "bin": "[0.80,0.85)",
+          "mid": 0.825,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        },
+        {
+          "bin": "[0.85,0.90)",
+          "mid": 0.875,
+          "n": 1,
+          "held": 0,
+          "hold_rate": 0.0
+        },
+        {
+          "bin": "[0.90,0.95)",
+          "mid": 0.925,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        },
+        {
+          "bin": "[0.95,1.00)",
+          "mid": 0.975,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        }
+      ]
+    },
+    "diagnosis": {
+      "n": 1,
+      "bins": [
+        {
+          "bin": "[0.80,0.85)",
+          "mid": 0.825,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        },
+        {
+          "bin": "[0.85,0.90)",
+          "mid": 0.875,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        },
+        {
+          "bin": "[0.90,0.95)",
+          "mid": 0.925,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        },
+        {
+          "bin": "[0.95,1.00)",
+          "mid": 0.975,
+          "n": 1,
+          "held": 0,
+          "hold_rate": 0.0
+        }
+      ]
+    },
+    "metric-claim": {
+      "n": 1,
+      "bins": [
+        {
+          "bin": "[0.80,0.85)",
+          "mid": 0.825,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        },
+        {
+          "bin": "[0.85,0.90)",
+          "mid": 0.875,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        },
+        {
+          "bin": "[0.90,0.95)",
+          "mid": 0.925,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        },
+        {
+          "bin": "[0.95,1.00)",
+          "mid": 0.975,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        }
+      ]
+    },
+    "tooling": {
+      "n": 29,
+      "bins": [
+        {
+          "bin": "[0.80,0.85)",
+          "mid": 0.825,
+          "n": 1,
+          "held": 1,
+          "hold_rate": 1.0
+        },
+        {
+          "bin": "[0.85,0.90)",
+          "mid": 0.875,
+          "n": 15,
+          "held": 13,
+          "hold_rate": 0.867
+        },
+        {
+          "bin": "[0.90,0.95)",
+          "mid": 0.925,
+          "n": 13,
+          "held": 10,
+          "hold_rate": 0.769
+        },
+        {
+          "bin": "[0.95,1.00)",
+          "mid": 0.975,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        }
+      ]
+    },
+    "unclassified": {
+      "n": 7,
+      "bins": [
+        {
+          "bin": "[0.80,0.85)",
+          "mid": 0.825,
+          "n": 1,
+          "held": 0,
+          "hold_rate": 0.0
+        },
+        {
+          "bin": "[0.85,0.90)",
+          "mid": 0.875,
+          "n": 5,
+          "held": 4,
+          "hold_rate": 0.8
+        },
+        {
+          "bin": "[0.90,0.95)",
+          "mid": 0.925,
+          "n": 1,
+          "held": 1,
+          "hold_rate": 1.0
+        },
+        {
+          "bin": "[0.95,1.00)",
+          "mid": 0.975,
+          "n": 0,
+          "held": 0,
+          "hold_rate": null
+        }
+      ]
+    }
+  },
+  "by_difficulty": {
+    "1 command": {
+      "n": 28,
+      "held": 26,
+      "hold_rate": 0.929
+    },
+    "2+ commands": {
+      "n": 23,
+      "held": 17,
+      "hold_rate": 0.739
+    },
+    "receipt missing": {
+      "n": 6,
+      "held": 2,
+      "hold_rate": 0.333
+    }
+  }
+}
