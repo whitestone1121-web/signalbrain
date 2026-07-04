@@ -65,8 +65,13 @@ Diff-size stratification: next.
 ### 3.3 Confidence inversion at the top of the scale (observed, unpredicted)
 ▢ The [first calibration curves](calibration-curves/README.md) show hold-rate
 *falling* as stated confidence rises above ~0.90 (86% → 83% → 33%, top bin
-n=3). Hypothesis: agents state peak confidence precisely where they stopped
-doubting; doubt was doing verification work. Needs n.
+n=3). Two candidate mechanisms: (a) agents state peak confidence precisely
+where they stopped doubting, and doubt was doing verification work; (b) stated
+confidence is a *social signal rather than an epistemic one* — agents
+"performing certainty rather than reporting it" (Husain, correspondence).
+Consistent with the broader finding that model confidence and accuracy diverge
+in modern networks (Guo et al. 2017); tail-bin breakdown is also the classic
+failure regime of Platt-style calibration. Needs n.
 
 ### 3.4 Self-referential measures (observed)
 ▢ A receipt whose measure invokes the scoring pipeline deadlocks against the
@@ -87,9 +92,13 @@ classifier, not the interested lane, is the standard (adjudication receipt
 
 ## 4. Open problems
 
-1. **Smoothing for trust** — hierarchical class backoff under data sparsity;
-   ▢ incorporate priors from calibration-under-sparsity literature (pointers
-   requested from Husain).
+1. **Smoothing for trust** — hierarchical class backoff under data sparsity.
+   Pointers (via Husain): Platt scaling and its tail-bin failure modes;
+   Guo et al. 2017, "On Calibration of Modern Neural Networks" (temperature
+   scaling). Direction: adapt temperature scaling to *stated* confidence,
+   using the measured ledger as ground truth — post-hoc recalibration of the
+   agents' confidence channel, with the gate consuming calibrated rather than
+   raw confidence.
 2. **Difficulty-aware thresholds** — should ELIGIBLE thresholds vary by
    difficulty stratum?
 3. **The top-bin inversion** — replicate at n≥30; artifact or law?
