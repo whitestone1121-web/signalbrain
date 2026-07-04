@@ -118,5 +118,8 @@ gate math via `pip install signalbrain` (`sb gate`).
 
 ## Acknowledgments
 
-▢ Hamel Husain — framing ("online evaluation with stakes"), failure-mode
-critiques (§3.1, §3.2), reviewer.
+▢ The "online evaluation with stakes" framing and the failure-mode critiques
+seeding §3.1–§3.2 arose in correspondence with Hamel Husain's office; the
+Guo et al. pointer came through the same channel. Attribution will be
+finalized with the parties on publication — fittingly for this report,
+correspondence-channel identity is itself an unverified claim.
