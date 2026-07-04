@@ -104,6 +104,14 @@ Every number in that document is re-derivable from cited SHAs.
 
 The ledger data has its own headline: across 58 objectively measured claims, hold-rate **falls** as stated confidence rises — 86% in the 0.85–0.90 bin, 83% in 0.90–0.95, 33% above 0.95. The most confident claims were the least reliable. Reproducible curves + generator: [`report/calibration-curves/`](report/calibration-curves/).
 
+## MCP server — receipts as native agent tools
+
+Listed on the [official MCP Registry](https://registry.modelcontextprotocol.io/?search=signalbrain) as `io.github.whitestone1121-web/signalbrain`. Any MCP client (goose, Claude Desktop, Claude Code, Cursor) gets three tools: `emit_receipt`, `validate_receipt`, `gate_status` — so the agent writes spec-compliant claims and reads its own earned-autonomy standing.
+
+```bash
+uvx --from "signalbrain[mcp]" sb-mcp
+```
+
 ## Quick start
 
 ```bash
