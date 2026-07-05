@@ -12,9 +12,9 @@
 
 [Get started](docs/pilot/GETTING_STARTED.md) · [Receipt spec](docs/RECEIPT_SPEC.md) · [Architecture & roadmap](docs/PHASE0_EXTRACT_PLAN.md) · [The founding incident](docs/incidents/2026-07-tooling-trust-streak-gaming.md) · [Pilot](docs/pilot/FREE_VS_PILOT.md) · [Demo repo](https://github.com/whitestone1121-web/receipt-gate-demo)
 
-Every company is letting agents change systems that matter. Every agent overstates what it did. SignalBrain is the referee: signed improvement receipts, objective re-score, and per-class calibrated trust — so autonomy is earned, not self-reported.
+Every company is letting deterministic governed processes change systems that matter. Every autonomous tool overstates what it did. SignalBrain is the referee: signed improvement receipts, objective re-score, and per-class calibrated trust — so autonomy is earned, not self-reported.
 
-Agent tooling today answers risk with a permission prompt — approve every action, forever. Receipts are the exit ramp: **an agent earns the right to stop asking**, one measured claim at a time, per change-class, revocable by evidence.
+Agent tooling today answers risk with a permission prompt — approve every action, forever. Receipts are the exit ramp: **a governed process earns the right to stop asking**, one measured claim at a time, per change-class, revocable by evidence.
 
 **Your repo, your ledger, no server.** Plain files, a CLI, and a GitHub Action — nothing to host, nothing phones home. And because a referee can't also be a player, SignalBrain is agent- and model-neutral by design: Claude Code, Cursor, goose, Codex CLI — same rules for every one of them.
 
@@ -23,6 +23,31 @@ Agent tooling today answers risk with a permission prompt — approve every acti
 </p>
 
 This repository is **Phase 0 v0.1**: the receipt spec, ledger math, scoring lane, anti-Goodhart machinery, and the founding incident record — extracted from the [Titan reference deployment](https://github.com/whitestone1121-web/neural-chat-v3) (R&D dummy that keeps trying to game its own ledger, in public).
+
+## What integrity means here
+
+SignalBrain Integrity verifies claim integrity, not total system correctness. Its core invariant:
+
+> No unmerged, modified, self-scored, or test-only/pin claim can increase earned trust. Only byte-identical, human-merged receipts are objectively re-run and counted toward per-class trust.
+
+Concretely, `sb check` proves the receipt you are about to score exists byte-for-byte on the merged ref. `sb score` re-runs the receipt's own measurement commands and records whether the claim held. `sb gate` turns the ledger into TRUST/GATE or per-class ELIGIBLE/GATE decisions.
+
+What it detects:
+
+- A process trying to score a receipt before a human merge.
+- A receipt edited after merge.
+- A measurement that fails when re-run.
+- Same-PR test-only pins that are true by construction and should earn zero trust.
+- Per-class trust claims that fall below the configured evidence threshold.
+
+What it does not detect:
+
+- GPU memory corruption, kernel faults, or model-serving stack corruption.
+- Trading-alpha correctness, business logic drift, or domain truth unless your receipt measures that invariant.
+- Data poisoning, prompt injection, or model truthfulness by itself.
+- Production execution breaches unless you wire the CLI exit codes into your deploy, CI, scheduler, or circuit breaker.
+
+On breach, SignalBrain is fail-closed at the interface you choose: `sb check` returns a nonzero guard code, `sb score` refuses unmerged/drifted receipts instead of writing earned trust, and `sb gate` exits `1` for GATE. In CI this blocks the workflow; in a scheduler it can halt the next run; in a runtime system it is a circuit breaker only if you connect that exit status to one.
 
 ## 60-second demo — run it, don't trust it
 
@@ -129,6 +154,10 @@ sb gate --ledger .signalbrain/ledger.jsonl --by-class --window 10
 # Or wire it into CI — see the fork-able demo's workflow:
 #    https://github.com/whitestone1121-web/receipt-gate-demo
 ```
+
+## Versioning
+
+`signalbrain` is currently `0.x` alpha software. Pin exact versions in production pilots, expect breaking changes before `1.0`, and treat each release note as part of the contract. The security invariant above is the stable design center; the CLI and receipt schema may still tighten as pilots expose edge cases.
 
 <details>
 <summary>Reference-deployment invocations (legacy scripts, kept for parity)</summary>
