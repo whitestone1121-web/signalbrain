@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -12,10 +14,22 @@ mcp_sdk = pytest.importorskip("mcp", reason="install signalbrain[mcp]")
 from mcp import ClientSession, StdioServerParameters  # noqa: E402
 from mcp.client.stdio import stdio_client  # noqa: E402
 
+ROOT = Path(__file__).resolve().parents[2]
+
+
+def _server_params() -> StdioServerParameters:
+    env = {**os.environ, "PYTHONPATH": str(ROOT / "src")}
+    return StdioServerParameters(
+        command=sys.executable,
+        args=["-m", "signalbrain.mcp_server"],
+        cwd=ROOT,
+        env=env,
+    )
+
 
 @pytest.mark.anyio
 async def test_emit_validate_gate_roundtrip(tmp_path):
-    params = StdioServerParameters(command=sys.executable, args=["-m", "signalbrain.mcp_server"])
+    params = _server_params()
     async with stdio_client(params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
@@ -51,7 +65,7 @@ async def test_emit_validate_gate_roundtrip(tmp_path):
 
 @pytest.mark.anyio
 async def test_emit_refuses_dishonest_inputs(tmp_path):
-    params = StdioServerParameters(command=sys.executable, args=["-m", "signalbrain.mcp_server"])
+    params = _server_params()
     async with stdio_client(params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()

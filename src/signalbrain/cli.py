@@ -1,5 +1,8 @@
 """sb — score receipts, read gates.
 
+Core invariant: only byte-identical, human-merged receipts that objectively
+re-run can increase earned trust.
+
   sb score <receipt.md ...> [--root .] [--ledger ledger.jsonl] [--ref origin/main]
                             [--rescore] [--allow-unmerged] [--timeout 180]
   sb gate  [--ledger ledger.jsonl] [--window N] [--by-class] [--recency-only]

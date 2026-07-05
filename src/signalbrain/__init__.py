@@ -1,3 +1,3 @@
-"""SignalBrain — trust layer for AI-modified software."""
+"""SignalBrain verifies that only merged, objectively re-run receipts can earn trust."""
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
