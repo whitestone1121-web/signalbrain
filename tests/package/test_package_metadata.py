@@ -59,5 +59,6 @@ def test_license_is_declared_as_apache_2():
     pyproject = tomllib.loads((ROOT / "pyproject.toml").read_text())
     assert pyproject["project"]["license"] == "Apache-2.0"
     license_text = (ROOT / "LICENSE").read_text()
-    assert license_text.startswith("Apache License\nVersion 2.0")
+    assert "Apache License" in license_text
+    assert "Version 2.0, January 2004" in license_text
     assert "http://www.apache.org/licenses/LICENSE-2.0" in license_text
