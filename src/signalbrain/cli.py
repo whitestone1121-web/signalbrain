@@ -58,6 +58,19 @@ def _cmd_gate(args: argparse.Namespace) -> int:
     print(json.dumps(verdict, indent=2))
     return 0 if allowed else 1
 
+def _cmd_report(args: argparse.Namespace) -> int:
+    from .report import run_report
+    try:
+        run_report(
+            ledger_path=Path(args.ledger),
+            receipts_dir=Path(args.receipts_dir),
+            out_dir=Path(args.out)
+        )
+        return 0
+    except Exception as e:
+        print(f"Error compiling calibration report: {e}", file=sys.stderr)
+        return 1
+
 
 def _cmd_check(args: argparse.Namespace) -> int:
     result = guard_mod.check_merged(Path(args.root).resolve(), Path(args.receipt), merged_ref=args.ref)
@@ -91,6 +104,12 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--root", default=".")
     p.add_argument("--ref", default="origin/main")
     p.set_defaults(fn=_cmd_check)
+
+    p = sub.add_parser("report", help="generate calibration curves and telemetry summaries from a ledger")
+    p.add_argument("--ledger", required=True, help="path to ledger.jsonl")
+    p.add_argument("--receipts-dir", default="receipts", help="directory containing markdown receipts")
+    p.add_argument("--out", default="report", help="output destination directory")
+    p.set_defaults(fn=_cmd_report)
 
     args = ap.parse_args(argv)
     return args.fn(args)
