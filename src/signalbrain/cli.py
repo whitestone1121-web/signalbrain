@@ -1,4 +1,4 @@
-"""sb — score receipts, read gates.
+"""sb - score receipts, read gates.
 
 Core invariant: only byte-identical, human-merged receipts that objectively
 re-run can increase earned trust.
@@ -8,9 +8,9 @@ re-run can increase earned trust.
   sb gate  [--ledger ledger.jsonl] [--window N] [--by-class] [--recency-only]
   sb check <receipt.md> [--root .] [--ref origin/main]
 
-Exit codes: score → 0 if every receipt scored (held or not — honest failure is a
-result), 3 if any was refused by the merged-receipt guard; gate → 0 TRUST, 1 GATE;
-check → the guard's own code (0/3/4/5).
+Exit codes: score -> 0 if every receipt scored (held or not - honest failure is
+a result), 3 if any was refused by the merged-receipt guard; gate -> 0 TRUST,
+1 GATE; check -> the guard's own code (0/3/4/5).
 """
 
 from __future__ import annotations

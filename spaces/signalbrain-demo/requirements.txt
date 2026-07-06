@@ -1,0 +1,2 @@
+gradio>=4.44,<5
+signalbrain==0.1.4
