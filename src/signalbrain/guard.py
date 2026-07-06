@@ -52,11 +52,13 @@ def check_merged(
     except ValueError:
         return GuardResult(UNMERGED, f"{receipt} is outside the repo — score only human-merged receipts")
 
-    if _git(root, "cat-file", "-e", f"{merged_ref}:{rel}").returncode != 0:
+    git_rel = rel.as_posix()
+
+    if _git(root, "cat-file", "-e", f"{merged_ref}:{git_rel}").returncode != 0:
         return GuardResult(UNMERGED, f"{rel} is not on {merged_ref} — score only human-merged receipts")
 
     local = _git(root, "hash-object", str(receipt)).stdout.strip()
-    merged = _git(root, "rev-parse", f"{merged_ref}:{rel}").stdout.strip()
+    merged = _git(root, "rev-parse", f"{merged_ref}:{git_rel}").stdout.strip()
     if local != merged:
         return GuardResult(
             CONTENT_DRIFT,

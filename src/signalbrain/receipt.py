@@ -163,7 +163,10 @@ def _parse_command_line(line: str) -> list[str] | None:
             return ["/bin/bash", *parts]
         return ["/bin/bash", "-lc", rest]
     if line.startswith(("python3 ", "python ")):
-        return _safe_split(line)
+        parts = _safe_split(line)
+        if parts and parts[0] in {"python", "python3"}:
+            return [sys.executable, *parts[1:]]
+        return parts
     return None
 
 

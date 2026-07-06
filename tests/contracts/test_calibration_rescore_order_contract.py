@@ -16,10 +16,18 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 from pathlib import Path
+
+import pytest
 
 REPO = Path(__file__).resolve().parents[2]
 MOD = REPO / "scripts" / "calibration_score_measured.py"
+
+pytestmark = pytest.mark.skipif(
+    os.name == "nt",
+    reason="extracted calibration measured-scoring script uses POSIX fcntl",
+)
 
 
 def _load():

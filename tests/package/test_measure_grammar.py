@@ -8,6 +8,8 @@ logic in a committed script and invoke that script as argv.
 
 from __future__ import annotations
 
+import sys
+
 from signalbrain.receipt import (
     UNSUPPORTED_SHELL_GRAMMAR,
     extract_commands_with_env,
@@ -48,7 +50,8 @@ def test_disallowed_leader_with_pipe_is_rejected():
 
 def test_plain_commands_unchanged():
     assert _cmds("pytest tests/x.py -q") == [["pytest", "tests/x.py", "-q"]]
-    assert _cmds('python3 -c "pass"') == [["python3", "-c", "pass"]]
+    assert _cmds('python3 -c "pass"') == [[sys.executable, "-c", "pass"]]
+    assert _cmds('python -c "pass"') == [[sys.executable, "-c", "pass"]]
 
 
 def test_inline_env_prefix_with_pipe():
