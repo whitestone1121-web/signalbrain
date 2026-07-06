@@ -1,0 +1,81 @@
+name: Agent review
+description: Report an autonomous or agent-assisted review finding.
+title: "[agent-review] "
+labels: ["agent-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reviewing SignalBrain. Keep the report reproducible: one
+        command, one observed behavior, one reason it matters.
+  - type: input
+    id: agent
+    attributes:
+      label: Agent or tool
+      description: Name the agent/tool/model if relevant. "Human/manual" is fine.
+      placeholder: Codex, Claude Code, Cursor, goose, Aider, manual review
+  - type: input
+    id: sha
+    attributes:
+      label: Repo SHA
+      placeholder: git rev-parse HEAD
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Windows 11, Python 3.12, PowerShell
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Reproduction command
+      description: Paste the exact command or smallest script that reproduces it.
+      render: bash
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: dropdown
+    id: lane
+    attributes:
+      label: Review lane
+      options:
+        - install
+        - receipt parsing
+        - scoring
+        - gate
+        - report
+        - docs
+        - security
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: invariant
+    attributes:
+      label: Why it matters
+      description: Explain the connection to claim integrity, trust math, or contributor experience.
+    validations:
+      required: true
+  - type: checkboxes
+    id: patch
+    attributes:
+      label: Patch status
+      options:
+        - label: I can open a PR for this.
+        - label: I added or can add a receipt-style measurement.
+        - label: This may affect trust math, scoring, gating, or merged-receipt guards.
+
