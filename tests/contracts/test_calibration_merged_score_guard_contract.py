@@ -24,6 +24,11 @@ CHECK = REPO / "scripts" / "calibration_receipt_merged_check.sh"
 WRAPPER = REPO / "scripts" / "calibration_score_receipt.sh"
 MERGED_RECEIPT = REPO / "docs" / "improvements" / "0593-tooling-pin-adjudication-classifier-standard.md"
 
+pytestmark = pytest.mark.skipif(
+    os.name == "nt",
+    reason="extracted calibration shell wrapper contract is POSIX-only",
+)
+
 
 def _run(args: list[str], env_extra: dict[str, str] | None = None) -> subprocess.CompletedProcess:
     env = {**os.environ, **(env_extra or {})}
