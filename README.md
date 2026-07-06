@@ -10,7 +10,7 @@
 
 <!-- mcp-name: io.github.whitestone1121-web/signalbrain -->
 
-[Get started](docs/pilot/GETTING_STARTED.md) · [Receipt spec](docs/RECEIPT_SPEC.md) · [Agent beacon](docs/AGENT_BEACON.md) · [Measure examples](docs/examples/measure-commands.md) · [Architecture & roadmap](docs/PHASE0_EXTRACT_PLAN.md) · [The founding incident](docs/incidents/2026-07-tooling-trust-streak-gaming.md) · [Pilot](docs/pilot/FREE_VS_PILOT.md) · [Demo repo](https://github.com/whitestone1121-web/receipt-gate-demo)
+[Get started](docs/pilot/GETTING_STARTED.md) · [Receipt spec](docs/RECEIPT_SPEC.md) · [Agent beacon](docs/AGENT_BEACON.md) · [Free compute](docs/FREE_COMPUTE_RUNBOOK.md) · [Measure examples](docs/examples/measure-commands.md) · [Architecture & roadmap](docs/PHASE0_EXTRACT_PLAN.md) · [The founding incident](docs/incidents/2026-07-tooling-trust-streak-gaming.md) · [Pilot](docs/pilot/FREE_VS_PILOT.md) · [Demo repo](https://github.com/whitestone1121-web/receipt-gate-demo)
 
 **Try the 60-second receipt gate:** run `pip install signalbrain && bash demo/demo.sh`. If the demo catches something unclear, [open an issue](https://github.com/whitestone1121-web/signalbrain/issues/new); if the invariant makes sense, star the repo so other agent teams can find it.
 
