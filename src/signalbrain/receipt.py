@@ -127,6 +127,9 @@ def measure_grammar_errors(text: str) -> list[str]:
     return errors
 
 
+_ENV_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+
+
 def _split_inline_env_prefix(line: str) -> tuple[list[str], str]:
     """Split leading VAR=value tokens into synthetic export lines."""
     exports: list[str] = []
@@ -138,6 +141,13 @@ def _split_inline_env_prefix(line: str) -> tuple[list[str], str]:
         token, tail = parts[0], parts[1]
         if "=" in token and not token.startswith(("pytest", "python", "bash", "/bin/")):
             key, _, val = token.partition("=")
+            # A leading VAR=value is an env prefix ONLY when key is a clean shell
+            # identifier and value is a literal. `c=$(grep ...)` / `x=$Y` are
+            # shell assignments, not env prefixes: stripping them mangled the
+            # measure and recorded a false miss for any command-substitution
+            # measure. Leave those to the shell (they fall through to bash -lc).
+            if not _ENV_KEY.match(key) or "$(" in val or "`" in val or val.startswith("$"):
+                break
             exports.append(f"export {key}={val}")
             rest = tail
             continue
