@@ -53,6 +53,22 @@ On breach, SignalBrain is fail-closed at the interface you choose: `sb check` re
 
 Operational examples: [`docs/INTEGRITY_BREACH_RUNBOOK.md`](docs/INTEGRITY_BREACH_RUNBOOK.md). Release and publishing controls: [`docs/RELEASE_AND_DISTRIBUTION.md`](docs/RELEASE_AND_DISTRIBUTION.md).
 
+## Field audit: the agent trust gap is real, and measurable
+
+We pointed the same question SignalBrain asks — *does the claim match the recorded evidence?* — at **560 real pull requests from 8 autonomous coding agents** (Devin, Cursor, Codegen, Google's Jules, Factory's Droid, Ellipsis, Sourcery, Tembo). Every number is re-derivable from GitHub's public API; the harness is [`docs/field-audit/agent_trust_audit.py`](docs/field-audit/agent_trust_audit.py).
+
+**47% of merged agent PRs left no verification evidence at all** — no CI, no completed test plan, no re-runnable claim. The change simply landed. You cannot audit what was never recorded. And where a claim existed, the agent's own artifacts sometimes contradicted it:
+
+| Agent | What happened | Source |
+|---|---|---|
+| Codegen | merged *"🚀 Switch to New Prediction Engine,"* then merged *"🔄 URGENT: Revert to Old Prediction Engine"* | [score-phantom#2](https://github.com/Heisdawrld/score-phantom/pull/2) |
+| Devin | merged a fix, then reverted *"two regressions from #647"*; in another repo, four merges *"all crashed the game"* before a mass rollback | [H-Gripe#648](https://github.com/tanzanite2025/H-Gripe-Studio/pull/648) |
+| Cursor | merged a 6-step test plan with **zero boxes checked and zero CI runs** | [MidTN#24](https://github.com/jsteiml/MidTN/pull/24) |
+
+We held the audit to its own bar: candidates that didn't survive re-verification (a "failing" CI job that was actually an unrelated deploy step; a docs PR that only *mentioned* reverting) were **dropped** — the exact re-check agents skip and a trust layer automates.
+
+Full audit + method → [`docs/field-audit/`](docs/field-audit/). This is the gap SignalBrain closes.
+
 ## 60-second demo — run it, don't trust it
 
 ```bash
