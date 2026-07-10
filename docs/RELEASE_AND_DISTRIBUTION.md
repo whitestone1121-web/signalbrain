@@ -55,7 +55,7 @@ Run this after each PyPI release:
 ```bash
 python3 -m venv /tmp/signalbrain-smoke
 /tmp/signalbrain-smoke/bin/pip install --upgrade pip
-/tmp/signalbrain-smoke/bin/pip install signalbrain==0.1.4
+/tmp/signalbrain-smoke/bin/pip install signalbrain==0.1.5
 /tmp/signalbrain-smoke/bin/sb --help
 /tmp/signalbrain-smoke/bin/sb gate --help
 ```
@@ -63,5 +63,5 @@ python3 -m venv /tmp/signalbrain-smoke
 For MCP smoke after the MCP extra is live:
 
 ```bash
-uvx --from "signalbrain[mcp]==0.1.4" sb-mcp --help
+uvx --from "signalbrain[mcp]==0.1.5" sb-mcp --help
 ```

@@ -1,2 +1,2 @@
 gradio>=4.44,<5
-signalbrain==0.1.4
+signalbrain==0.1.5
