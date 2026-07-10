@@ -12,7 +12,7 @@ app = modal.App("signalbrain-smoke")
 
 image = (
     modal.Image.debian_slim(python_version="3.12")
-    .pip_install("signalbrain==0.1.4")
+    .pip_install("signalbrain==0.1.5")
 )
 
 
