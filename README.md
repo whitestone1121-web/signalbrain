@@ -67,7 +67,7 @@ We pointed the same question SignalBrain asks — *does the claim match the reco
 
 We held the audit to its own bar: candidates that didn't survive re-verification (a "failing" CI job that was actually an unrelated deploy step; a docs PR that only *mentioned* reverting) were **dropped** — the exact re-check agents skip and a trust layer automates.
 
-Full audit + method → [`docs/field-audit/`](docs/field-audit/). This is the gap SignalBrain closes.
+**Read the essay** → [Do AI coding agents leave anything you can verify?](https://claude.ai/code/artifact/23b430ea-b9ad-4e57-b5c1-97dac453e165) · **Reproduce it** → [`docs/field-audit/`](docs/field-audit/) (harness + 560-row ledger). This is the gap SignalBrain closes.
 
 ## 60-second demo — run it, don't trust it
 
